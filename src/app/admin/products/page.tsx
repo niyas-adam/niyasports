@@ -9,6 +9,7 @@ import {
   Package,
   Search,
   X,
+  Upload,
 } from "lucide-react";
 
 type Product = {
@@ -39,6 +40,7 @@ export default function AdminProductsPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState(defaultProduct);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const supabase = createClient();
 
   const fetchProducts = useCallback(async () => {
@@ -162,7 +164,7 @@ export default function AdminProductsPage() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-ink mb-1">Price ($)</label>
+                  <label className="block text-sm font-medium text-ink mb-1">Price (₹)</label>
                   <input
                     type="number"
                     step="0.01"
@@ -198,14 +200,61 @@ export default function AdminProductsPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-ink mb-1">Image URL</label>
-                <input
-                  type="text"
-                  value={form.image_url}
-                  onChange={(e) => setForm({ ...form, image_url: e.target.value })}
-                  placeholder="https://images.unsplash.com/..."
-                  className="w-full px-3 py-2 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-accent-bright transition text-sm"
-                />
+                <label className="block text-sm font-medium text-ink mb-1">Product Image</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={form.image_url}
+                    onChange={(e) => setForm({ ...form, image_url: e.target.value })}
+                    placeholder="https://images.unsplash.com/..."
+                    className="flex-1 px-3 py-2 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-accent-bright transition text-sm"
+                  />
+                  <label className="flex items-center gap-2 px-4 py-2 bg-surface-2 border border-line text-ink text-sm cursor-pointer hover:bg-surface transition whitespace-nowrap">
+                    <Upload size={16} />
+                    Upload
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      disabled={uploading}
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        setUploading(true);
+                        try {
+                          const fd = new FormData();
+                          fd.append("image", file);
+                          const res = await fetch("/api/upload/product-image", {
+                            method: "POST",
+                            body: fd,
+                          });
+                          const data = await res.json();
+                          if (res.ok && data.url) {
+                            setForm({ ...form, image_url: data.url });
+                          } else {
+                            alert(data.error || "Upload failed");
+                          }
+                        } catch {
+                          alert("Upload failed");
+                        }
+                        setUploading(false);
+                      }}
+                    />
+                  </label>
+                </div>
+                {form.image_url && (
+                  <img
+                    src={form.image_url}
+                    alt="Preview"
+                    className="mt-2 h-24 w-24 object-cover border border-line"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = "none";
+                    }}
+                  />
+                )}
+                {uploading && (
+                  <p className="text-xs text-muted mt-1">Uploading...</p>
+                )}
               </div>
               <div className="flex gap-3 pt-2">
                 <button
@@ -262,7 +311,7 @@ export default function AdminProductsPage() {
                     </span>
                   </td>
                   <td className="px-4 py-3 text-right text-sm font-medium text-ink">
-                    ${Number(product.price).toFixed(2)}
+                    ₹{Number(product.price).toFixed(2)}
                   </td>
                   <td className="px-4 py-3 text-right">
                     <span

@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase";
 import {
   LayoutDashboard,
   Package,
@@ -12,8 +11,8 @@ import {
   Image,
   ChevronLeft,
   LogOut,
+  ShieldAlert,
 } from "lucide-react";
-import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 const navItems = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -28,38 +27,36 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [user, setUser] = useState<SupabaseUser | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
-  const supabase = createClient();
+
+  const isLoginPage = pathname === "/admin/login";
 
   useEffect(() => {
-    supabase.auth.getUser().then(async ({ data: { user } }) => {
-      if (!user) {
-        router.push("/login");
-        return;
-      }
-      setUser(user);
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("is_admin")
-        .eq("id", user.id)
-        .single();
-      if (!profile?.is_admin) {
-        router.push("/dashboard");
-        return;
-      }
-      setIsAdmin(true);
+    if (isLoginPage) {
       setLoading(false);
-    });
-  }, []);
+      return;
+    }
+    fetch("/api/admin/me")
+      .then(async (res) => {
+        if (!res.ok) {
+          router.push("/admin/login");
+          return;
+        }
+        setIsAdmin(true);
+        setLoading(false);
+      })
+      .catch(() => {
+        router.push("/admin/login");
+      });
+  }, [router, isLoginPage]);
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.push("/");
+    await fetch("/api/admin/logout", { method: "POST" });
+    router.push("/admin/login");
   };
 
   if (loading) {
@@ -68,6 +65,10 @@ export default function AdminLayout({
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-bright" />
       </div>
     );
+  }
+
+  if (isLoginPage) {
+    return <>{children}</>;
   }
 
   if (!isAdmin) return null;
@@ -83,8 +84,9 @@ export default function AdminLayout({
           {sidebarOpen && (
             <Link
               href="/admin"
-              className="font-anton text-lg text-ink tracking-wide"
+              className="font-anton text-lg text-ink tracking-wide flex items-center gap-2"
             >
+              <ShieldAlert size={18} className="text-accent-bright" />
               Admin
             </Link>
           )}
@@ -121,9 +123,6 @@ export default function AdminLayout({
         </nav>
 
         <div className="p-3 border-t border-line">
-          {sidebarOpen && user && (
-            <p className="text-xs text-muted truncate mb-2">{user.email}</p>
-          )}
           <button
             onClick={handleSignOut}
             className="flex items-center gap-3 px-3 py-2.5 text-muted hover:bg-surface-2 hover:text-ink transition w-full text-sm"

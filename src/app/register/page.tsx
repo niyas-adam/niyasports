@@ -71,7 +71,7 @@ export default function RegisterPage() {
           </p>
           <Link
             href="/login"
-            className="inline-block mt-8 bg-red hover:bg-red-bright text-white px-8 py-3 font-semibold uppercase tracking-wider text-sm transition"
+            className="inline-block mt-8 bg-accent hover:bg-accent-bright text-white px-8 py-3 font-semibold uppercase tracking-wider text-sm rounded-lg transition"
           >
             Go to Sign In
           </Link>
@@ -99,7 +99,7 @@ export default function RegisterPage() {
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="John Doe"
-              className="w-full px-4 py-3 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm"
+              className="w-full px-4 py-3 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-accent-bright rounded-lg transition text-sm"
             />
           </div>
 
@@ -111,7 +111,7 @@ export default function RegisterPage() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
-              className="w-full px-4 py-3 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm"
+              className="w-full px-4 py-3 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-accent-bright rounded-lg transition text-sm"
             />
           </div>
 
@@ -123,7 +123,7 @@ export default function RegisterPage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="At least 6 characters"
               required
-              className="w-full px-4 py-3 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm"
+              className="w-full px-4 py-3 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-accent-bright rounded-lg transition text-sm"
             />
           </div>
 
@@ -135,12 +135,12 @@ export default function RegisterPage() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Re-enter your password"
               required
-              className="w-full px-4 py-3 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm"
+              className="w-full px-4 py-3 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-accent-bright rounded-lg transition text-sm"
             />
           </div>
 
           {error && (
-            <div className="bg-red/10 text-red-bright p-3 text-sm border border-red/30">
+            <div className="bg-accent/10 text-accent-bright p-3 text-sm border border-accent/30 rounded-lg">
               {error}
             </div>
           )}
@@ -148,7 +148,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-red hover:bg-red-bright disabled:opacity-50 text-white py-3 font-semibold uppercase tracking-wider text-sm transition"
+            className="w-full bg-accent hover:bg-accent-bright disabled:opacity-50 text-white py-3 font-semibold uppercase tracking-wider text-sm rounded-lg transition"
           >
             {loading ? "Creating account..." : "Create Account"}
           </button>
@@ -158,7 +158,7 @@ export default function RegisterPage() {
           Already have an account?{" "}
           <Link
             href="/login"
-            className="text-ink hover:text-red-bright font-medium transition"
+            className="text-ink hover:text-accent-bright font-medium transition"
           >
             Sign in
           </Link>

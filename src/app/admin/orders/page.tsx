@@ -26,7 +26,7 @@ const statusColors: Record<string, string> = {
   pending: "bg-yellow-900/30 text-yellow-400",
   processing: "bg-blue-900/30 text-blue-400",
   completed: "bg-green-900/30 text-green-400",
-  cancelled: "bg-red/10 text-red-bright",
+  cancelled: "bg-accent/10 text-accent-bright",
 };
 
 export default function AdminOrdersPage() {
@@ -71,7 +71,7 @@ export default function AdminOrdersPage() {
   return (
     <div>
       <div className="flex items-center gap-3 mb-6">
-        <ShoppingCart className="text-red-bright" size={28} />
+        <ShoppingCart className="text-accent-bright" size={28} />
         <h1 className="font-anton text-3xl text-ink">Orders</h1>
       </div>
 
@@ -82,13 +82,13 @@ export default function AdminOrdersPage() {
           placeholder="Search by order ID or customer name..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-2.5 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm"
+          className="w-full pl-10 pr-4 py-2.5 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-accent-bright transition text-sm"
         />
       </div>
 
       {loading ? (
         <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-bright mx-auto" />
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-bright mx-auto" />
         </div>
       ) : orders.length === 0 ? (
         <div className="text-center py-12 bg-surface border border-line">
@@ -181,7 +181,7 @@ export default function AdminOrdersPage() {
                             className={`px-3 py-1.5 text-xs font-medium border transition uppercase tracking-wider ${
                               order.status === status
                                 ? "bg-surface-2 border-line text-muted cursor-not-allowed"
-                                : "border-line text-muted hover:border-red-bright hover:text-red-bright"
+                                : "border-line text-muted hover:border-accent-bright hover:text-accent-bright"
                             }`}
                           >
                             {status}

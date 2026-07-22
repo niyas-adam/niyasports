@@ -66,14 +66,14 @@ export default async function AdminDashboard() {
       label: "Total Users",
       value: totalUsers ?? 0,
       icon: Users,
-      color: "bg-red/20 text-red-bright",
+      color: "bg-accent/20 text-accent-bright",
     },
   ];
 
   return (
     <div>
       <div className="flex items-center gap-3 mb-8">
-        <TrendingUp className="text-red-bright" size={28} />
+        <TrendingUp className="text-accent-bright" size={28} />
         <h1 className="font-anton text-3xl text-ink">Dashboard</h1>
       </div>
 
@@ -128,7 +128,7 @@ export default async function AdminDashboard() {
                         : order.status === "pending"
                         ? "bg-yellow-900/30 text-yellow-400"
                         : order.status === "cancelled"
-                        ? "bg-red/10 text-red-bright"
+                        ? "bg-accent/10 text-accent-bright"
                         : "bg-surface-2 text-muted"
                     }`}
                   >
@@ -155,7 +155,7 @@ export default async function AdminDashboard() {
                   <span
                     className={`px-2 py-0.5 text-xs font-medium ${
                       product.stock === 0
-                        ? "bg-red/10 text-red-bright"
+                        ? "bg-accent/10 text-accent-bright"
                         : "bg-yellow-900/30 text-yellow-400"
                     }`}
                   >

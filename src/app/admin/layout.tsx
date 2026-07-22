@@ -65,7 +65,7 @@ export default function AdminLayout({
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-bg">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-bright" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-bright" />
       </div>
     );
   }
@@ -109,7 +109,7 @@ export default function AdminLayout({
                 href={item.href}
                 className={`flex items-center gap-3 px-3 py-2.5 transition ${
                   active
-                    ? "bg-red text-white"
+                    ? "bg-accent text-white"
                     : "text-muted hover:bg-surface-2 hover:text-ink"
                 }`}
               >

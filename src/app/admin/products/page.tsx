@@ -105,12 +105,12 @@ export default function AdminProductsPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <Package className="text-red-bright" size={28} />
+          <Package className="text-accent-bright" size={28} />
           <h1 className="font-anton text-3xl text-ink">Products</h1>
         </div>
         <button
           onClick={openCreate}
-          className="bg-red hover:bg-red-bright text-white px-4 py-2 text-sm font-semibold uppercase tracking-wider flex items-center gap-2 transition"
+          className="bg-accent hover:bg-accent-bright text-white px-4 py-2 text-sm font-semibold uppercase tracking-wider flex items-center gap-2 transition"
         >
           <Plus size={18} />
           Add Product
@@ -124,7 +124,7 @@ export default function AdminProductsPage() {
           placeholder="Search products..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-2.5 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm"
+          className="w-full pl-10 pr-4 py-2.5 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-accent-bright transition text-sm"
         />
       </div>
 
@@ -147,7 +147,7 @@ export default function AdminProductsPage() {
                   required
                   value={form.title}
                   onChange={(e) => setForm({ ...form, title: e.target.value })}
-                  className="w-full px-3 py-2 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm"
+                  className="w-full px-3 py-2 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-accent-bright transition text-sm"
                 />
               </div>
               <div>
@@ -157,7 +157,7 @@ export default function AdminProductsPage() {
                   rows={3}
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
-                  className="w-full px-3 py-2 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm resize-none"
+                  className="w-full px-3 py-2 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-accent-bright transition text-sm resize-none"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -170,7 +170,7 @@ export default function AdminProductsPage() {
                     required
                     value={form.price}
                     onChange={(e) => setForm({ ...form, price: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-3 py-2 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm"
+                    className="w-full px-3 py-2 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-accent-bright transition text-sm"
                   />
                 </div>
                 <div>
@@ -181,7 +181,7 @@ export default function AdminProductsPage() {
                     required
                     value={form.stock}
                     onChange={(e) => setForm({ ...form, stock: parseInt(e.target.value) || 0 })}
-                    className="w-full px-3 py-2 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm"
+                    className="w-full px-3 py-2 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-accent-bright transition text-sm"
                   />
                 </div>
               </div>
@@ -190,7 +190,7 @@ export default function AdminProductsPage() {
                 <select
                   value={form.category}
                   onChange={(e) => setForm({ ...form, category: e.target.value })}
-                  className="w-full px-3 py-2 bg-surface border border-line text-ink focus:outline-none focus:border-red-bright transition text-sm"
+                  className="w-full px-3 py-2 bg-surface border border-line text-ink focus:outline-none focus:border-accent-bright transition text-sm"
                 >
                   {categories.map((c) => (
                     <option key={c} value={c}>{c}</option>
@@ -204,7 +204,7 @@ export default function AdminProductsPage() {
                   value={form.image_url}
                   onChange={(e) => setForm({ ...form, image_url: e.target.value })}
                   placeholder="https://images.unsplash.com/..."
-                  className="w-full px-3 py-2 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm"
+                  className="w-full px-3 py-2 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-accent-bright transition text-sm"
                 />
               </div>
               <div className="flex gap-3 pt-2">
@@ -218,7 +218,7 @@ export default function AdminProductsPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="flex-1 bg-red hover:bg-red-bright disabled:opacity-50 text-white px-4 py-2.5 text-sm font-semibold uppercase tracking-wider transition"
+                  className="flex-1 bg-accent hover:bg-accent-bright disabled:opacity-50 text-white px-4 py-2.5 text-sm font-semibold uppercase tracking-wider transition"
                 >
                   {saving ? "Saving..." : editingId ? "Update" : "Create"}
                 </button>
@@ -230,7 +230,7 @@ export default function AdminProductsPage() {
 
       {loading ? (
         <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-bright mx-auto" />
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-bright mx-auto" />
         </div>
       ) : products.length === 0 ? (
         <div className="text-center py-12 bg-surface border border-line">
@@ -268,7 +268,7 @@ export default function AdminProductsPage() {
                     <span
                       className={`text-xs font-medium px-2 py-1 ${
                         product.stock <= 0
-                          ? "bg-red/10 text-red-bright"
+                          ? "bg-accent/10 text-accent-bright"
                           : product.stock < 10
                           ? "bg-yellow-900/30 text-yellow-400"
                           : "bg-green-900/30 text-green-400"
@@ -287,7 +287,7 @@ export default function AdminProductsPage() {
                       </button>
                       <button
                         onClick={() => handleDelete(product.id)}
-                        className="p-1.5 text-muted hover:text-red-bright transition"
+                        className="p-1.5 text-muted hover:text-accent-bright transition"
                       >
                         <Trash2 size={16} />
                       </button>

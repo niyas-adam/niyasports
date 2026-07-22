@@ -39,7 +39,7 @@ export default async function ProductPage({
   return (
     <div className="max-w-7xl mx-auto px-4 py-24">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
-        <div className="bg-surface-2 border border-line aspect-square relative overflow-hidden">
+        <div className="bg-surface-2 border border-line aspect-square relative overflow-hidden rounded-xl">
           <Image
             src={imgSrc}
             alt={product.title}
@@ -57,14 +57,14 @@ export default async function ProductPage({
           <h1 className="font-anton text-4xl md:text-5xl text-ink mt-2 leading-tight">
             {product.title}
           </h1>
-          <p className="text-3xl font-bold text-red-bright mt-4">
+          <p className="text-3xl font-bold text-accent-bright mt-4">
             ${Number(product.price).toFixed(2)}
           </p>
           <div className="mt-2">
             {product.stock > 0 ? (
               <span className="text-muted text-sm">In Stock ({product.stock} available)</span>
             ) : (
-              <span className="text-red text-sm font-medium">Out of Stock</span>
+              <span className="text-accent text-sm font-medium">Out of Stock</span>
             )}
           </div>
           <p className="text-muted mt-6 leading-relaxed">{product.description}</p>

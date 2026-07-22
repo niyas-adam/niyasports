@@ -27,10 +27,10 @@ export default async function DashboardPage() {
     <div className="max-w-4xl mx-auto px-4 py-24 bg-bg min-h-screen">
       <h1 className="font-anton text-4xl text-ink mb-10">My Account</h1>
 
-      <div className="bg-surface border border-line p-6 mb-8">
+      <div className="bg-surface border border-line p-6 mb-8 rounded-xl">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 bg-red/20 flex items-center justify-center">
-            <User className="text-red-bright" size={24} />
+          <div className="w-14 h-14 bg-accent/20 flex items-center justify-center rounded-xl">
+            <User className="text-accent-bright" size={24} />
           </div>
           <div>
             <h2 className="text-xl font-semibold text-ink">
@@ -40,7 +40,7 @@ export default async function DashboardPage() {
             {profile?.is_admin && (
               <Link
                 href="/admin"
-                className="text-xs text-red-bright hover:text-red mt-1 inline-block uppercase tracking-wider font-medium"
+                className="text-xs text-accent-bright hover:text-accent mt-1 inline-block uppercase tracking-wider font-medium"
               >
                 Admin Panel
               </Link>
@@ -52,12 +52,12 @@ export default async function DashboardPage() {
       <h2 className="font-anton text-3xl text-ink mb-6">Order History</h2>
 
       {!orders || orders.length === 0 ? (
-        <div className="bg-surface border border-line p-16 text-center">
+        <div className="bg-surface border border-line p-16 text-center rounded-xl">
           <Package className="mx-auto text-muted" size={48} />
           <p className="text-muted mt-4">No orders yet</p>
           <Link
             href="/"
-            className="inline-block mt-6 bg-red hover:bg-red-bright text-white px-8 py-3 font-semibold uppercase tracking-wider text-sm transition"
+            className="inline-block mt-6 bg-accent hover:bg-accent-bright text-white px-8 py-3 font-semibold uppercase tracking-wider text-sm rounded-lg transition"
           >
             Start Shopping
           </Link>
@@ -67,7 +67,7 @@ export default async function DashboardPage() {
           {orders.map((order) => (
             <div
               key={order.id}
-              className="bg-surface border border-line p-5"
+              className="bg-surface border border-line p-5 rounded-xl"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
@@ -90,7 +90,7 @@ export default async function DashboardPage() {
               </div>
               <div className="flex items-center justify-between mt-3">
                 <div className="flex items-center gap-2">
-                  <DollarSign size={18} className="text-red-bright" />
+                  <DollarSign size={18} className="text-accent-bright" />
                   <span className="font-bold text-lg text-ink">
                     ${Number(order.total_amount).toFixed(2)}
                   </span>

@@ -1,41 +1,57 @@
 "use client";
 
 import { ShoppingCart } from "lucide-react";
-import { useCart } from "./CartProvider";
+import { useCart } from "@/components/CartProvider";
 
 type Product = {
   id: string;
   title: string;
   price: number;
-  image_url: string;
-  stock: number;
+  image_url: string | null;
 };
 
-export default function AddToCartButton({ product }: { product: Product }) {
+export default function AddToCartButton({
+  product,
+  compact,
+}: {
+  product: Product;
+  compact?: boolean;
+}) {
   const { dispatch } = useCart();
 
-  const handleAdd = () => {
+  const handleAdd = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     dispatch({
       type: "ADD_ITEM",
       payload: {
         id: product.id,
         title: product.title,
         price: Number(product.price),
-        quantity: 1,
         image_url: product.image_url,
       },
     });
-    dispatch({ type: "OPEN_CART" });
   };
+
+  if (compact) {
+    return (
+      <button
+        onClick={handleAdd}
+        className="p-2 bg-accent hover:bg-accent-bright text-white transition"
+        title="Add to cart"
+      >
+        <ShoppingCart size={16} />
+      </button>
+    );
+  }
 
   return (
     <button
       onClick={handleAdd}
-      disabled={product.stock <= 0}
-      className="mt-8 w-full bg-red hover:bg-red-bright disabled:opacity-50 text-white py-4 font-semibold uppercase tracking-wider text-lg transition flex items-center justify-center gap-3"
+      className="mt-6 w-full bg-accent hover:bg-accent-bright text-white py-3 px-6 font-semibold uppercase tracking-wider text-sm transition inline-flex items-center justify-center gap-2 rounded-lg"
     >
-      <ShoppingCart size={22} />
-      {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
+      <ShoppingCart size={18} />
+      Add to Cart
     </button>
   );
 }

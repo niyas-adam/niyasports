@@ -1,51 +1,30 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --bg: #0a0908;
-  --surface: #151312;
-  --surface-2: #1d1a18;
-  --red: #a91e1e;
-  --red-bright: #d62828;
-  --ink: #f3efe8;
-  --muted: #948d84;
-  --line: #2a2624;
-  --font-anton: "Anton", sans-serif;
-  --font-inter: "Inter", sans-serif;
-}
-
-@theme inline {
-  --color-bg: var(--bg);
-  --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
-  --color-red: var(--red);
-  --color-red-bright: var(--red-bright);
-  --color-ink: var(--ink);
-  --color-muted: var(--muted);
-  --color-line: var(--line);
-}
-
-html {
-  scroll-behavior: smooth;
+  --bg: #0f0f0f;
+  --surface: #1a1a1a;
+  --surface-2: #252525;
+  --accent: #dc2626;
+  --accent-bright: #ef4444;
+  --ink: #fafafa;
+  --muted: #a3a3a3;
+  --line: #2a2a2a;
 }
 
 body {
-  background: var(--bg);
+  background-color: var(--bg);
   color: var(--ink);
-  font-family: var(--font-inter);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-.font-anton {
-  font-family: var(--font-anton);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
+/* Rounded global utilities */
+.btn {
+  @apply rounded-lg;
 }
-
-.section-heading {
-  font-family: var(--font-anton);
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
+.card {
+  @apply rounded-xl;
+}
+.input {
+  @apply rounded-lg;
 }

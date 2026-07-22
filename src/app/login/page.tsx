@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { createClient } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase";
 import LogoImage from "@/components/LogoImage";
 
 export default function LoginPage() {
@@ -31,24 +31,7 @@ export default function LoginPage() {
     }
 
     router.push("/dashboard");
-  };
-
-  const handleForgotPassword = async () => {
-    if (!email) {
-      setError("Enter your email address first.");
-      return;
-    }
-    setError("");
-    setLoading(true);
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/callback?next=/dashboard`,
-    });
-    if (error) {
-      setError(error.message);
-    } else {
-      setError("Check your email for a reset link.");
-    }
-    setLoading(false);
+    router.refresh();
   };
 
   return (
@@ -59,7 +42,7 @@ export default function LoginPage() {
             <LogoImage width={64} height={64} />
           </div>
           <h1 className="font-anton text-4xl text-ink">Welcome Back</h1>
-          <p className="text-muted mt-2 text-sm">Sign in to your United Sports account</p>
+          <p className="text-muted mt-2 text-sm">Sign in to your account</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-5">
@@ -73,7 +56,7 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
-              className="w-full px-4 py-3 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm"
+              className="w-full px-4 py-3 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-accent-bright rounded-lg transition text-sm"
             />
           </div>
 
@@ -87,12 +70,12 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               required
-              className="w-full px-4 py-3 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm"
+              className="w-full px-4 py-3 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-accent-bright rounded-lg transition text-sm"
             />
           </div>
 
           {error && (
-            <div className="bg-red/10 text-red-bright p-3 text-sm border border-red/30">
+            <div className="bg-accent/10 text-accent-bright p-3 text-sm border border-accent/30 rounded-lg">
               {error}
             </div>
           )}
@@ -100,17 +83,9 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-red hover:bg-red-bright disabled:opacity-50 text-white py-3 font-semibold uppercase tracking-wider text-sm transition"
+            className="w-full bg-accent hover:bg-accent-bright disabled:opacity-50 text-white py-3 font-semibold uppercase tracking-wider text-sm rounded-lg transition"
           >
             {loading ? "Signing in..." : "Sign In"}
-          </button>
-
-          <button
-            type="button"
-            onClick={handleForgotPassword}
-            className="w-full text-center text-sm text-muted hover:text-ink transition"
-          >
-            Forgot password?
           </button>
         </form>
 
@@ -118,7 +93,7 @@ export default function LoginPage() {
           Don&apos;t have an account?{" "}
           <Link
             href="/register"
-            className="text-ink hover:text-red-bright font-medium transition"
+            className="text-ink hover:text-accent-bright font-medium transition"
           >
             Create one
           </Link>

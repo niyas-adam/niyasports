@@ -71,7 +71,7 @@ export default function CartPage() {
           <p className="text-muted mt-4">Your cart is empty</p>
           <Link
             href="/"
-            className="inline-block mt-6 bg-red hover:bg-red-bright text-white px-8 py-3 font-semibold uppercase tracking-wider text-sm transition"
+            className="inline-block mt-6 bg-accent hover:bg-accent-bright text-white px-8 py-3 font-semibold uppercase tracking-wider text-sm rounded-lg transition"
           >
             Continue Shopping
           </Link>
@@ -82,14 +82,14 @@ export default function CartPage() {
             {state.items.map((item) => (
               <div
                 key={item.id}
-                className="bg-surface border border-line p-4 flex gap-4"
+                className="bg-surface border border-line p-4 flex gap-4 rounded-xl"
               >
-                <div className="w-24 h-24 bg-surface-2 border border-line flex items-center justify-center shrink-0">
+                <div className="w-24 h-24 bg-surface-2 border border-line rounded-lg flex items-center justify-center shrink-0">
                   <ShoppingBag className="text-muted" size={32} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-ink">{item.title}</h3>
-                  <p className="text-red-bright font-bold mt-1">
+                  <p className="text-accent-bright font-bold mt-1">
                     ${item.price.toFixed(2)}
                   </p>
                   <div className="flex items-center gap-3 mt-3">
@@ -122,7 +122,7 @@ export default function CartPage() {
                     </button>
                     <button
                       onClick={() => dispatch({ type: "REMOVE_ITEM", payload: item.id })}
-                      className="p-1.5 border border-red/30 text-red-bright hover:bg-red/10 ml-auto transition"
+                      className="p-1.5 border border-accent/30 text-accent-bright hover:bg-accent/10 ml-auto transition"
                     >
                       <Trash2 size={16} />
                     </button>
@@ -137,7 +137,7 @@ export default function CartPage() {
             ))}
           </div>
 
-          <div className="bg-surface border border-line p-6 h-fit">
+          <div className="bg-surface border border-line p-6 h-fit rounded-xl">
             <h2 className="text-lg font-semibold text-ink mb-4">Order Summary</h2>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
@@ -146,7 +146,7 @@ export default function CartPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted">Shipping</span>
-                <span className="text-red-bright">Free</span>
+                <span className="text-accent-bright">Free</span>
               </div>
             </div>
             <div className="border-t border-line mt-4 pt-4">
@@ -157,7 +157,7 @@ export default function CartPage() {
             </div>
             <button
               onClick={handleCheckout}
-              className="w-full bg-red hover:bg-red-bright text-white py-3 font-semibold uppercase tracking-wider text-sm mt-6 transition"
+              className="w-full bg-accent hover:bg-accent-bright text-white py-3 font-semibold uppercase tracking-wider text-sm mt-6 rounded-lg transition"
             >
               Place Order
             </button>

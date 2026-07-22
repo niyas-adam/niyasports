@@ -72,7 +72,7 @@ export default function AdminLogoPage() {
   return (
     <div>
       <div className="flex items-center gap-3 mb-8">
-        <Image className="text-red-bright" size={28} />
+        <Image className="text-accent-bright" size={28} />
         <h1 className="font-anton text-3xl text-ink">Logo</h1>
       </div>
 
@@ -90,7 +90,7 @@ export default function AdminLogoPage() {
             onClick={() => inputRef.current?.click()}
             className={`border-2 border-dashed p-10 text-center cursor-pointer transition ${
               dragOver
-                ? "border-red-bright bg-red/10"
+                ? "border-accent-bright bg-accent/10"
                 : "border-line hover:border-muted bg-surface-2"
             }`}
           >
@@ -116,7 +116,7 @@ export default function AdminLogoPage() {
                     setFile(null);
                     setPreview(null);
                   }}
-                  className="text-xs text-red-bright hover:text-red underline"
+                  className="text-xs text-accent-bright hover:text-accent underline"
                 >
                   Remove
                 </button>
@@ -135,7 +135,7 @@ export default function AdminLogoPage() {
           {file && !uploading && (
             <button
               onClick={handleUpload}
-              className="mt-4 w-full bg-red hover:bg-red-bright text-white py-3 font-semibold uppercase tracking-wider text-sm transition flex items-center justify-center gap-2"
+              className="mt-4 w-full bg-accent hover:bg-accent-bright text-white py-3 font-semibold uppercase tracking-wider text-sm transition flex items-center justify-center gap-2"
             >
               <Upload size={18} />
               Upload Logo
@@ -144,7 +144,7 @@ export default function AdminLogoPage() {
 
           {uploading && (
             <div className="mt-4 flex items-center justify-center gap-2 text-sm text-muted">
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-red-bright" />
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-accent-bright" />
               Uploading...
             </div>
           )}
@@ -154,7 +154,7 @@ export default function AdminLogoPage() {
               className={`mt-4 flex items-start gap-3 p-4 text-sm ${
                 result.type === "success"
                   ? "bg-green-900/30 text-green-400 border border-green-900"
-                  : "bg-red/10 text-red-bright border border-red/30"
+                  : "bg-accent/10 text-accent-bright border border-accent/30"
               }`}
             >
               {result.type === "success" ? (

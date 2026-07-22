@@ -3,13 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase";
-import { Mail, Lock, UserPlus } from "lucide-react";
+import LogoImage from "@/components/LogoImage";
 
 export default function RegisterPage() {
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [message, setMessage] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [verifySent, setVerifySent] = useState(false);
@@ -18,7 +18,17 @@ export default function RegisterPage() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    setMessage("");
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
     setLoading(true);
 
     const { error: signUpError, data } = await supabase.auth.signUp({
@@ -49,17 +59,19 @@ export default function RegisterPage() {
 
   if (verifySent) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center px-4">
+      <div className="min-h-screen flex items-center justify-center px-4 bg-bg">
         <div className="w-full max-w-md text-center">
-          <div className="text-6xl mb-6">✉️</div>
-          <h1 className="text-3xl font-bold text-slate-900">Verify Your Email</h1>
-          <p className="text-slate-500 mt-4">
-            We sent a confirmation link to <strong>{email}</strong>.
-            Please check your inbox and click the link to activate your account.
+          <div className="flex justify-center mb-4">
+            <LogoImage width={64} height={64} />
+          </div>
+          <h1 className="font-anton text-4xl text-ink">Check Your Email</h1>
+          <p className="text-muted mt-4 text-sm leading-relaxed">
+            We sent a confirmation link to <strong className="text-ink">{email}</strong>.
+            Click the link to activate your account, then sign in.
           </p>
           <Link
             href="/login"
-            className="inline-block mt-6 bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition"
+            className="inline-block mt-8 bg-red hover:bg-red-bright text-white px-8 py-3 font-semibold uppercase tracking-wider text-sm transition"
           >
             Go to Sign In
           </Link>
@@ -69,73 +81,85 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-bg">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">Create Account</h1>
-          <p className="text-slate-500 mt-2">Join NiyaSports today</p>
+        <div className="text-center mb-10">
+          <div className="flex justify-center mb-4">
+            <LogoImage width={64} height={64} />
+          </div>
+          <h1 className="font-anton text-4xl text-ink">Create Account</h1>
+          <p className="text-muted mt-2 text-sm">Join United Sports today</p>
         </div>
 
-        <form onSubmit={handleRegister} className="space-y-4">
+        <form onSubmit={handleRegister} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
+            <label className="block text-sm font-medium text-ink mb-1.5">Full Name</label>
             <input
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="John Doe"
-              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
+              className="w-full px-4 py-3 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                required
-                className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-              />
-            </div>
+            <label className="block text-sm font-medium text-ink mb-1.5">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              required
+              className="w-full px-4 py-3 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm"
+            />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="At least 6 characters"
-                required
-                minLength={6}
-                className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-              />
-            </div>
+            <label className="block text-sm font-medium text-ink mb-1.5">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="At least 6 characters"
+              required
+              className="w-full px-4 py-3 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-ink mb-1.5">Confirm Password</label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Re-enter your password"
+              required
+              className="w-full px-4 py-3 bg-surface border border-line text-ink placeholder:text-muted focus:outline-none focus:border-red-bright transition text-sm"
+            />
           </div>
 
           {error && (
-            <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm">{error}</div>
+            <div className="bg-red/10 text-red-bright p-3 text-sm border border-red/30">
+              {error}
+            </div>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white py-3 rounded-lg font-semibold transition flex items-center justify-center gap-2"
+            className="w-full bg-red hover:bg-red-bright disabled:opacity-50 text-white py-3 font-semibold uppercase tracking-wider text-sm transition"
           >
-            <UserPlus size={18} />
             {loading ? "Creating account..." : "Create Account"}
           </button>
         </form>
 
-        <p className="text-center mt-6 text-sm text-slate-500">
+        <p className="text-center mt-8 text-sm text-muted">
           Already have an account?{" "}
-          <Link href="/login" className="text-orange-500 hover:text-orange-600 font-medium">
+          <Link
+            href="/login"
+            className="text-ink hover:text-red-bright font-medium transition"
+          >
             Sign in
           </Link>
         </p>

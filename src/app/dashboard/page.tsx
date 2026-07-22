@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
-import { User, Package, Calendar, DollarSign } from "lucide-react";
+import { User, Package, Calendar, DollarSign, LogOut } from "lucide-react";
+import Link from "next/link";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -23,57 +24,65 @@ export default async function DashboardPage() {
     .order("created_at", { ascending: false });
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold text-slate-900 mb-8">My Dashboard</h1>
+    <div className="max-w-4xl mx-auto px-4 py-24 bg-bg min-h-screen">
+      <h1 className="font-anton text-4xl text-ink mb-10">My Account</h1>
 
-      <div className="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+      <div className="bg-surface border border-line p-6 mb-8">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center">
-            <User className="text-orange-500" size={28} />
+          <div className="w-14 h-14 bg-red/20 flex items-center justify-center">
+            <User className="text-red-bright" size={24} />
           </div>
           <div>
-            <h2 className="text-xl font-semibold">
+            <h2 className="text-xl font-semibold text-ink">
               {profile?.full_name || user.email}
             </h2>
-            <p className="text-slate-500">{user.email}</p>
+            <p className="text-sm text-muted">{user.email}</p>
+            {profile?.is_admin && (
+              <Link
+                href="/admin"
+                className="text-xs text-red-bright hover:text-red mt-1 inline-block uppercase tracking-wider font-medium"
+              >
+                Admin Panel
+              </Link>
+            )}
           </div>
         </div>
       </div>
 
-      <h2 className="text-2xl font-bold text-slate-900 mb-4">Order History</h2>
+      <h2 className="font-anton text-3xl text-ink mb-6">Order History</h2>
 
       {!orders || orders.length === 0 ? (
-        <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
-          <Package className="mx-auto text-slate-300" size={48} />
-          <p className="text-slate-500 mt-4">No orders yet</p>
-          <a
+        <div className="bg-surface border border-line p-16 text-center">
+          <Package className="mx-auto text-muted" size={48} />
+          <p className="text-muted mt-4">No orders yet</p>
+          <Link
             href="/"
-            className="inline-block mt-4 bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium transition"
+            className="inline-block mt-6 bg-red hover:bg-red-bright text-white px-8 py-3 font-semibold uppercase tracking-wider text-sm transition"
           >
             Start Shopping
-          </a>
+          </Link>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {orders.map((order) => (
             <div
               key={order.id}
-              className="bg-white rounded-xl border border-slate-200 p-6"
+              className="bg-surface border border-line p-5"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <Calendar size={18} className="text-slate-400" />
-                  <span className="text-sm text-slate-500">
+                  <Calendar size={16} className="text-muted" />
+                  <span className="text-sm text-muted">
                     {new Date(order.created_at).toLocaleDateString()}
                   </span>
                 </div>
                 <span
-                  className={`px-3 py-1 rounded-full text-xs font-medium ${
+                  className={`px-3 py-1 text-xs font-medium uppercase tracking-wider ${
                     order.status === "completed"
-                      ? "bg-green-100 text-green-700"
+                      ? "bg-green-900/30 text-green-400"
                       : order.status === "pending"
-                      ? "bg-yellow-100 text-yellow-700"
-                      : "bg-slate-100 text-slate-700"
+                      ? "bg-yellow-900/30 text-yellow-400"
+                      : "bg-surface-2 text-muted"
                   }`}
                 >
                   {order.status}
@@ -81,12 +90,12 @@ export default async function DashboardPage() {
               </div>
               <div className="flex items-center justify-between mt-3">
                 <div className="flex items-center gap-2">
-                  <DollarSign size={18} className="text-green-500" />
-                  <span className="font-semibold text-lg">
+                  <DollarSign size={18} className="text-red-bright" />
+                  <span className="font-bold text-lg text-ink">
                     ${Number(order.total_amount).toFixed(2)}
                   </span>
                 </div>
-                <span className="text-xs text-slate-400 font-mono">
+                <span className="text-xs text-muted font-mono">
                   #{order.id.slice(0, 8)}
                 </span>
               </div>

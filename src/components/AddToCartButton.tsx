@@ -32,7 +32,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
     <button
       onClick={handleAdd}
       disabled={product.stock <= 0}
-      className="mt-8 w-full bg-orange-500 hover:bg-orange-600 disabled:bg-slate-300 text-white py-4 rounded-xl font-semibold text-lg transition flex items-center justify-center gap-3"
+      className="mt-8 w-full bg-red hover:bg-red-bright disabled:opacity-50 text-white py-4 font-semibold uppercase tracking-wider text-lg transition flex items-center justify-center gap-3"
     >
       <ShoppingCart size={22} />
       {product.stock > 0 ? "Add to Cart" : "Out of Stock"}

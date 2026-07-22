@@ -1,25 +1,51 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #1e293b;
-  --primary: #ea580c;
-  --primary-dark: #c2410c;
-  --secondary: #1e293b;
-  --accent: #f97316;
+  --bg: #0a0908;
+  --surface: #151312;
+  --surface-2: #1d1a18;
+  --red: #a91e1e;
+  --red-bright: #d62828;
+  --ink: #f3efe8;
+  --muted: #948d84;
+  --line: #2a2624;
+  --font-anton: "Anton", sans-serif;
+  --font-inter: "Inter", sans-serif;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-primary-dark: var(--primary-dark);
-  --color-secondary: var(--secondary);
-  --color-accent: var(--accent);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-red: var(--red);
+  --color-red-bright: var(--red-bright);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-anton {
+  font-family: var(--font-anton);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.section-heading {
+  font-family: var(--font-anton);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }

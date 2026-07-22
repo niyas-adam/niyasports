@@ -55,23 +55,23 @@ export default function CartPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 py-24 bg-bg min-h-screen">
       <CartDrawer />
 
-      <div className="flex items-center gap-4 mb-8">
-        <Link href="/" className="hover:text-orange-500 transition">
+      <div className="flex items-center gap-4 mb-10">
+        <Link href="/" className="text-muted hover:text-ink transition">
           <ArrowLeft size={20} />
         </Link>
-        <h1 className="text-3xl font-bold text-slate-900">Shopping Cart</h1>
+        <h1 className="font-anton text-4xl text-ink">Shopping Cart</h1>
       </div>
 
       {state.items.length === 0 ? (
         <div className="text-center py-20">
-          <ShoppingBag className="mx-auto text-slate-300" size={64} />
-          <p className="text-slate-500 text-lg mt-4">Your cart is empty</p>
+          <ShoppingBag className="mx-auto text-muted" size={64} />
+          <p className="text-muted mt-4">Your cart is empty</p>
           <Link
             href="/"
-            className="inline-block mt-4 bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium transition"
+            className="inline-block mt-6 bg-red hover:bg-red-bright text-white px-8 py-3 font-semibold uppercase tracking-wider text-sm transition"
           >
             Continue Shopping
           </Link>
@@ -82,14 +82,14 @@ export default function CartPage() {
             {state.items.map((item) => (
               <div
                 key={item.id}
-                className="bg-white border border-slate-200 rounded-xl p-4 flex gap-4"
+                className="bg-surface border border-line p-4 flex gap-4"
               >
-                <div className="w-24 h-24 bg-slate-100 rounded-lg flex items-center justify-center text-3xl">
-                  📦
+                <div className="w-24 h-24 bg-surface-2 border border-line flex items-center justify-center shrink-0">
+                  <ShoppingBag className="text-muted" size={32} />
                 </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold">{item.title}</h3>
-                  <p className="text-orange-500 font-bold mt-1">
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-ink">{item.title}</h3>
+                  <p className="text-red-bright font-bold mt-1">
                     ${item.price.toFixed(2)}
                   </p>
                   <div className="flex items-center gap-3 mt-3">
@@ -104,11 +104,11 @@ export default function CartPage() {
                           });
                         }
                       }}
-                      className="p-1.5 border rounded-lg hover:bg-slate-50 transition"
+                      className="p-1.5 border border-line text-muted hover:text-ink transition"
                     >
                       <Minus size={16} />
                     </button>
-                    <span className="font-medium w-8 text-center">{item.quantity}</span>
+                    <span className="font-medium text-ink w-8 text-center">{item.quantity}</span>
                     <button
                       onClick={() =>
                         dispatch({
@@ -116,20 +116,20 @@ export default function CartPage() {
                           payload: { id: item.id, quantity: item.quantity + 1 },
                         })
                       }
-                      className="p-1.5 border rounded-lg hover:bg-slate-50 transition"
+                      className="p-1.5 border border-line text-muted hover:text-ink transition"
                     >
                       <Plus size={16} />
                     </button>
                     <button
                       onClick={() => dispatch({ type: "REMOVE_ITEM", payload: item.id })}
-                      className="p-1.5 border border-red-200 text-red-500 rounded-lg hover:bg-red-50 ml-auto transition"
+                      className="p-1.5 border border-red/30 text-red-bright hover:bg-red/10 ml-auto transition"
                     >
                       <Trash2 size={16} />
                     </button>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="font-bold text-lg">
+                <div className="text-right shrink-0">
+                  <p className="font-bold text-lg text-ink">
                     ${(item.price * item.quantity).toFixed(2)}
                   </p>
                 </div>
@@ -137,27 +137,27 @@ export default function CartPage() {
             ))}
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-xl p-6 h-fit">
-            <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
+          <div className="bg-surface border border-line p-6 h-fit">
+            <h2 className="text-lg font-semibold text-ink mb-4">Order Summary</h2>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-slate-500">Subtotal</span>
-                <span>${totalPrice.toFixed(2)}</span>
+                <span className="text-muted">Subtotal</span>
+                <span className="text-ink">${totalPrice.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Shipping</span>
-                <span className="text-green-600">Free</span>
+                <span className="text-muted">Shipping</span>
+                <span className="text-red-bright">Free</span>
               </div>
             </div>
-            <div className="border-t mt-4 pt-4">
-              <div className="flex justify-between font-bold text-lg">
+            <div className="border-t border-line mt-4 pt-4">
+              <div className="flex justify-between font-bold text-lg text-ink">
                 <span>Total</span>
                 <span>${totalPrice.toFixed(2)}</span>
               </div>
             </div>
             <button
               onClick={handleCheckout}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold mt-6 transition"
+              className="w-full bg-red hover:bg-red-bright text-white py-3 font-semibold uppercase tracking-wider text-sm mt-6 transition"
             >
               Place Order
             </button>

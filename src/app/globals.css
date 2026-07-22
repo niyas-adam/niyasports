@@ -18,13 +18,12 @@ body {
   color: var(--ink);
 }
 
-/* Rounded global utilities */
 .btn {
-  @apply rounded-lg;
+  border-radius: 0.5rem;
 }
 .card {
-  @apply rounded-xl;
+  border-radius: 0.75rem;
 }
 .input {
-  @apply rounded-lg;
+  border-radius: 0.5rem;
 }

@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { writeFile } from "fs/promises";
-import { existsSync } from "fs";
 import { getAdminSession } from "@/lib/admin-auth";
-import path from "path";
+
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const EDGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/upload-product-image`;
 
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const MAX_SIZE = 5 * 1024 * 1024;
@@ -35,22 +35,24 @@ export async function POST(request: Request) {
       );
     }
 
-    const ext = file.type.split("/")[1];
-    const filename = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}.${ext}`;
-    const uploadDir = path.join(process.cwd(), "public", "uploads");
+    const edgeFormData = new FormData();
+    edgeFormData.append("image", file);
 
-    if (!existsSync(uploadDir)) {
-      const { mkdir } = await import("fs/promises");
-      await mkdir(uploadDir, { recursive: true });
+    const edgeRes = await fetch(EDGE_FUNCTION_URL, {
+      method: "POST",
+      body: edgeFormData,
+    });
+
+    const data = await edgeRes.json();
+
+    if (!edgeRes.ok) {
+      return NextResponse.json(
+        { error: data.error || "Upload failed" },
+        { status: 500 }
+      );
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    await writeFile(path.join(uploadDir, filename), buffer);
-
-    const url = `/uploads/${filename}`;
-
-    return NextResponse.json({ success: true, url });
+    return NextResponse.json({ success: true, url: data.url });
   } catch (error) {
     console.error("Upload error:", error);
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });
